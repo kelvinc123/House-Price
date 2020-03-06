@@ -28,7 +28,7 @@ def preprocess_missing(df):
     ## Last Part (Can change code here)
     df.loc[df["LotFrontage"].isna(), "LotFrontage"] = df["LotFrontage"].mean()
     df.loc[df["MasVnrArea"].isna(), "MasVnrArea"] = 0
-    df.loc[df["MasVnrType"].isna(), "MasVnrType"] = "NA"
+    df.loc[df["MasVnrType"].isna(), "MasVnrType"] = "None"
 
     # MSZoning value C (all) change to C
     df.loc[df["MSZoning"] == "C (all)", "MSZoning"] = "C"
