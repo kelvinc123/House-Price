@@ -30,12 +30,7 @@ def preprocess_missing(df):
     df.loc[df["MasVnrArea"].isna(), "MasVnrArea"] = 0
     df.loc[df["MasVnrType"].isna(), "MasVnrType"] = "NA"
 
-    # MSZoning value C (all) change to C
-    df.loc[df["MSZoning"] == "C (all)", "MSZoning"] = "C"
     
-    # BldgType value Twnhs and 2fmCon change to TwnhsI and 2FmCon
-    df.loc[df["BldgType"] == "Twnhs", "BldgType"] = "TwnhsI"
-    df.loc[df["BldgType"] == "2fmCon", "BldgType"] = "2FmCon"
 
     type_cols = ["category", "category", "float64", "int64", "category", "category", "category", "category",  
     "category", "category", "category", "category", "category", "category", "category", "category",
@@ -53,15 +48,15 @@ def preprocess_missing(df):
 
     for col, dtypee in type_cols:
         df[col] = df[col].astype(dtypee)
-    
-    
+
 
     return(df)
 
-def get_instruction(label, output = True):
-    df = pd.read_csv("_database/Input/train.csv")
+def get_instruction(label):
+    
+    df = pd.read_csv("_database/Input/train.csv", index_col = 0)
     col_names = df.columns
-    list_cat = []
+    
     
     # input check
     if (not label in col_names) | (label == "SalePrice"):
@@ -74,7 +69,6 @@ def get_instruction(label, output = True):
     # compile using re
     label = re.compile("^{}:".format(label))
     next_label = re.compile("^{}:".format(next_label))
-    cats = re.compile("\s+([A-Za-z0-9]+)\s+")
 
     # algorithm start
     with open("_database/Input/data_description.txt") as desc:
@@ -86,11 +80,7 @@ def get_instruction(label, output = True):
             line = desc.readline()
 
             if label.search(line):
-                if output:
-                    pass
-                else:
-                    print(line, end = "")
-                
+                print(line, end = "")
 
                 while True:
                     line = desc.readline()
@@ -101,11 +91,6 @@ def get_instruction(label, output = True):
                         finish = True
                         break
                     else:
-                        if output:
-                            if cats.search(line):
-                                match = re.search(cats, line)
-                                list_cat.append(match.group(1))
-                        else:
-                            print(line, end = "")
+                        print(line, end = "")
                     
-    return list_cat
+    return 
