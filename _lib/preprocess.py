@@ -36,6 +36,9 @@ def preprocess_missing(df):
     # BldgType value Twnhs and 2fmCon change to TwnhsI and 2FmCon
     df.loc[df["BldgType"] == "Twnhs", "BldgType"] = "TwnhsI"
     df.loc[df["BldgType"] == "2fmCon", "BldgType"] = "2FmCon"
+    
+    # Exterior1st value Wd Sdng change to WdSdng
+    df.loc[df["Exterior1st"] == "Wd Sdng", "Exterior1st"] = "WdSdng"
 
     type_cols = ["category", "category", "float64", "int64", "category", "category", "category", "category",  
     "category", "category", "category", "category", "category", "category", "category", "category",
@@ -74,7 +77,7 @@ def get_instruction(label, output = True):
     # compile using re
     label = re.compile("^{}:".format(label))
     next_label = re.compile("^{}:".format(next_label))
-    cats = re.compile("\s+([A-Za-z0-9]+)\s+")
+    cats = re.compile("\s+([A-Za-z0-9.,*&?$@^]+)\s+")
 
     # algorithm start
     with open("_database/Input/data_description.txt") as desc:
@@ -103,8 +106,10 @@ def get_instruction(label, output = True):
                     else:
                         if output:
                             if cats.search(line):
+#                                 print(line)
                                 match = re.search(cats, line)
                                 list_cat.append(match.group(1))
+#                                 print(match.group(1))
                         else:
                             print(line, end = "")
                     
