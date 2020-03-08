@@ -216,7 +216,7 @@ Exterior1st: Exterior covering on house
        Stone	Stone
        Stucco	Stucco
        VinylSd	Vinyl Siding
-       Wd Sdng	Wood Siding
+       WdSdng	Wood Siding
        WdShing	Wood Shingles
 	
 Exterior2nd: Exterior covering on house (if more than one material)
