@@ -6,7 +6,7 @@ import re
 def preprocess_missing(df):
 
     # drop NA for electrical variable
-    df = df.loc[df["Electrical"].isna() == False,:]
+    df.loc[df["Electrical"].isna(), "Electrical"] = "SBrkr"
 
 
     # Missing Values (NaN)
@@ -17,7 +17,8 @@ def preprocess_missing(df):
     ## Basement
     falacy_1 = (df["BsmtQual"].isna() == False) & (df["BsmtExposure"].isna())
     falacy_2 = (df["BsmtQual"].isna() == False) & (df["BsmtFinType2"].isna())
-    df = df.loc[(falacy_1 == False) & (falacy_2 == False), :] # remove NaN
+    df.loc[falacy_1, "BsmtExposure"] = "No"
+    df.loc[falacy_2, "BsmtFinType2"] = "Unf"
     df.loc[df["BsmtQual"].isna(), ["BsmtQual", "BsmtCond", "BsmtExposure", "BsmtFinType1", "BsmtFinType2"]] = "NA"
 
     ## Other NA value's variable
@@ -62,10 +63,10 @@ def preprocess_missing(df):
     "category", "category", "category", "category", "category", "category", "category", "category",
     "category", "category", "int64", "int64", "category", "category", "category", "category",
     "category", "float64", "category", "category", "category", "category", "category", "category",
-    "category", "int64", "category", "int64", "int64", "int64", "category", "category", "category",
-    "category", "int64", "int64", "int64", "int64", "int64", "int64", "int64", "int64", "int64",
+    "category", "float64", "category", "float64", "float64", "float64", "category", "category", "category",
+    "category", "int64", "int64", "int64", "int64", "float64", "float64", "int64", "int64", "int64",
     "int64", "category", "int64", "category", "int64", "category", "category", "int64", "category",
-    "int64", "int64", "category", "category", "category", "int64", "int64", "int64", "int64",
+    "float64", "float64", "category", "category", "category", "int64", "int64", "int64", "int64",
     "int64", "int64", "category", "category", "category", "int64", "int64", "int64", "category",
     "category", "int64"]
 
@@ -73,6 +74,7 @@ def preprocess_missing(df):
 
 
     for col, dtypee in type_cols:
+#         print("Converting {} to {}\n".format(col, dtypee))
         df[col] = df[col].astype(dtypee)
 
 
