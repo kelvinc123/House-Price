@@ -77,7 +77,15 @@ def preprocess_missing(df):
 #         print("Converting {} to {}\n".format(col, dtypee))
         df[col] = df[col].astype(dtypee)
 
-
+    #df = df.drop([1299, 935, 186, 347, 1231, 1183, 692, 955])
+    
+    zero_var = ["WoodDeckSF", "ScreenPorch", "PoolArea", "OpenPorchSF", "MiscVal", "MasVnrArea",
+            "LowQualFinSF", "GarageYrBlt", "GarageArea", "EnclosedPorch", "BsmtFinSF2",
+            "BsmtFinSF1", "3SsnPorch", "2ndFlrSF"]
+    
+    for col in zero_var:
+        df["has{}".format(col)] = df[col] == 0
+    
 
     return(df)
 
