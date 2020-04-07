@@ -39,9 +39,9 @@ def preprocess_missing(df):
     test.loc[test["Exterior1st"].isna(), ["Exterior1st", "Exterior2nd"]] = "VinylSd"
 
     # Garage
-    vals = ["NA", 0, "NA", 0, 0, "NA", "NA"]
-    test.loc[test["GarageCars"].isna(), ["Garage" in col for col in test.columns]] = vals
-    test.loc[test["GarageFinish"].isna(), ["Garage" in col for col in test.columns]] = vals
+    vals = ["NA", 0, "NA", 0, 0, "NA", "NA", 1, 1]
+    col_gar = ["Garage" in col for col in test.columns]
+    test.loc[test["GarageFinish"].isna(), col_gar] = vals
 
     # Other
     features_na = ["KitchenQual", "SaleType", "Utilities", "Functional"]
